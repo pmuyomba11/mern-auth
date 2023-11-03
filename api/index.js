@@ -24,7 +24,18 @@ mongoose.connect(process.env.DATABASE_URL).then(() => {
     console.log(err.message.red);
 })
 
+//////////////Error Handling...///////////
+app.use((err, req, res, next) => {
+    const message = err.message || 'Internal Server Error'
+    const statusCode = err.statusCode || 500
 
+    return res.status(statusCode).json({
+        success: false,
+        message,
+        statusCode
+    })
+})
+//////////////////////////////////////////
 //Port Listening...
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}...`.inverse.bold.blue)
