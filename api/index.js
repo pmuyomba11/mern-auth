@@ -8,6 +8,18 @@ import color from 'colors'
 const app = express();
 
 
+//Middleware...
+app.use(morgan('dev'))
+
+
+//DATABASE Connect
+mongoose.connect(process.env.DATABASE_URL).then(() => {
+    console.log('Database Connected...'.green.inverse);
+}).catch((err) => {
+    console.log(err.message.red);
+})
+
+
 //Port Listening...
 app.listen(PORT, () =>{
     console.log(`Server is running on PORT: ${PORT}...`.inverse.bold.blue)
